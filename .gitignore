@@ -1,1 +1,7 @@
-/Points.xyz
+/inliers.xyz
+/cylindrical_cloud_points.xyz
+/vertical_cloud_points.xyz
+/horizontal_cloud_points.xyz
+/cylindrical_clusters.xyz
+/vertical_clusters.xyz
+/horizontals_clusters.xyz
