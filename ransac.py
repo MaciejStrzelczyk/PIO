@@ -3,7 +3,7 @@ from scipy.stats import norm
 import random
 from csv import writer
 
-ERROR = 0.8                                         # dla płaszczyzny około 0,2, dla cylindra 0,8
+ERROR = 0.2                                         # dla płaszczyzny około 0,2, dla cylindra 0,8
 EXPECTED_NUMBER_OF_INLIERS = 250
 
 
@@ -68,10 +68,10 @@ def get_inliers(distance_all_points):
 
 if __name__ == '__main__':
     i = []
-
-    open("horizontal_cloud_points.xyz").read()
-    vertical = np.genfromtxt("horizontal_cloud_points.xyz", delimiter=',')
-    open("horizontal_cloud_points.xyz").close()
+    color = []
+    open("cylindrical_cloud_points.xyz").read()
+    vertical = np.genfromtxt("cylindrical_cloud_points.xyz", delimiter=',')
+    open("cylindrical_cloud_points.xyz").close()
 
     while True:
         random_points = get_random_points(vertical)
@@ -88,10 +88,10 @@ if __name__ == '__main__':
             yz_sum = abs(sum(inliers_y)) + abs(sum(inliers_z))
             xz_sum = abs(sum(inliers_x)) + abs(sum(inliers_z))
 
-            if average_distance_all_points <= 1 and (yz_sum > xy_sum or xz_sum > xy_sum):
-                print('\nthis is a cloud of horizontal plane')
-            elif average_distance_all_points <= 1 and (xy_sum > xz_sum or xy_sum > yz_sum):
+            if (xy_sum > xz_sum or xy_sum > yz_sum) and average_distance_all_points <= 1:
                 print('this is a cloud of vertical plane')
+            elif (yz_sum > xy_sum or xz_sum > xy_sum) and average_distance_all_points <= 1:
+                print('\nthis is a cloud of horizontal plane')
             else:
                 print('it is not a cloud of plane')
             break

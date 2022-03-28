@@ -3,14 +3,12 @@ from matplotlib import pyplot as plt
 from scipy.stats import norm
 from csv import writer
 
-num_points = 1000
+num_points = 10000
 
 def generates_horizontal_points(num_points):
-
-
     distribution_x = norm(loc=0, scale=20)
     distribution_y = norm(loc=0, scale=0.1)
-    distribution_z = norm(loc=0, scale=20)
+    distribution_z = norm(loc=0, scale=40)
     x = distribution_x.rvs(size=num_points)
     y = distribution_y.rvs(size=num_points)
     z = distribution_z.rvs(size=num_points)
@@ -20,10 +18,8 @@ def generates_horizontal_points(num_points):
 
 
 def generates_vertical_points(num_points):
-
-
     distribution_x = norm(loc=0, scale=0.1)
-    distribution_y = norm(loc=0, scale=20)
+    distribution_y = norm(loc=0, scale=30)
     distribution_z = norm(loc=0, scale=20)
     x = distribution_x.rvs(size=num_points)
     y = distribution_y.rvs(size=num_points)
