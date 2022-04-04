@@ -21,12 +21,12 @@ def get_pictures_and_convert(area, size_x, size_y):
         img = img_as_ubyte(img)
         g = feature.greycomatrix(img, [1], [45], levels=256, symmetric=True, normed=True)
 
-        contrast = feature.greycoprops(g, 'contrast')[0][0]
-        energy = feature.greycoprops(g, 'energy')[0][0]
-        homogeneity = feature.greycoprops(g, 'homogeneity')[0][0]
-        correlation = feature.greycoprops(g, 'correlation')[0][0]
-        dissimilarity = feature.greycoprops(g, 'dissimilarity')[0][0]
-        ASM = feature.greycoprops(g, 'ASM')[0][0]
+        contrast = round(feature.greycoprops(g, 'contrast')[0][0], 5)
+        energy = round(feature.greycoprops(g, 'energy')[0][0], 5)
+        homogeneity = round(feature.greycoprops(g, 'homogeneity')[0][0], 5)
+        correlation = round(feature.greycoprops(g, 'correlation')[0][0], 5)
+        dissimilarity = round(feature.greycoprops(g, 'dissimilarity')[0][0], 5)
+        ASM = round(feature.greycoprops(g, 'ASM')[0][0], 5)
         vector = [area, contrast, energy, homogeneity, correlation, dissimilarity, ASM]
         vectors.append(vector)
     with open("vector.csv", 'a') as f:

@@ -12,7 +12,7 @@ def read_csv_files():
         reader = csv.reader(f, delimiter=',')
         headers = next(reader)
         data = np.array(list(reader))
-    return data[:, 0], data[:, 1:]
+    return data[:, 1:], data[:, 0]
 
 
 if __name__ == '__main__':
