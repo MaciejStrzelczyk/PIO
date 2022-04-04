@@ -31,10 +31,11 @@ def get_pictures_and_convert(area, size_x, size_y):
         correlation = feature.greycoprops(g, 'correlation')[0][0]
         dissimilarity = feature.greycoprops(g, 'dissimilarity')[0][0]
         ASM = feature.greycoprops(g, 'ASM')[0][0]
-        vector = [area + str(i + 1), contrast, energy, homogeneity, correlation, dissimilarity, ASM]
+        vector = [area, contrast, energy, homogeneity, correlation, dissimilarity, ASM]
         vectors.append(vector)
     with open("vector.csv", 'a') as f:
         np.savetxt(f, np.array(vectors), fmt="%s", delimiter=",")
+
 
 
 # io.imshow(img)
@@ -49,6 +50,9 @@ if __name__ == '__main__':
     get_pictures_and_convert('desk', 128, 128)
     get_pictures_and_convert('floor', 128, 128)
     get_pictures_and_convert('wall', 128, 128)
+
+
+
     # print(os.listdir('desk'))
 # print(pictures[1])
 # io.imsave("wall/wall11.jpg", x)
