@@ -18,7 +18,7 @@ def read_csv_files():
 if __name__ == '__main__':
     X, Y = read_csv_files()
     classifier = svm.SVC(gamma='auto')
-    x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=5)
+    x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=2)
     classifier.fit(x_train, y_train)
     y_pred = classifier.predict(x_test)
     acc = accuracy_score(y_test, y_pred)
