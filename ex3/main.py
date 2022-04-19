@@ -1,29 +1,35 @@
-import csv
-import  numpy as np
-# from keras import Sequential
-# from keras.layers import Danse
-# import pandas as pd
-# from sklearn.model_selection import train_test_split
-# from sklearn.metrics import confusion_matrix
+import numpy as np
+import pandas as pd
+from keras import Sequential
+from keras.layers import Dense
+from sklearn.metrics import confusion_matrix
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import OneHotEncoder, LabelEncoder
 
-#Todo: używać read_csv
-def read_csv_files():
-    with open("vector.csv", 'r') as f:
-        reader = csv.reader(f, delimiter=',')
-        headers = next(reader)
-        data = np.array(list(reader))
-    return data[:, 1:], data[:, 0]
 
+# if __name__ == '__main__':
+df = pd.read_csv('vector.csv', sep=',')
+data = df.to_numpy()
+x = data[:, 1:].astype('float')
+y = data[:, 0]
 
-if __name__ == '__main__':
-    X, Y = read_csv_files()
-    label_encoder = LabelEncoder()
-    intiger_encoded = label_encoder.fit_transform(Y)
+label_encoder = LabelEncoder()
+y_int = label_encoder.fit_transform(y)
+y_onehot = OneHotEncoder(sparse=False)
+y_int = y_int.reshape(len(y_int), 1)
+y_onehot = y_onehot.fit_transform(y_int)
+x_train, x_test, y_train, y_test = train_test_split(x, y_onehot, test_size=0.3)
 
-    onehot_encoder = OneHotEncoder(sparse=False)
-    intiger_encoded = intiger_encoded.reshape(len(intiger_encoded), 1)
-    onehot_encoded = onehot_encoder.fit_transform(intiger_encoded)
+model = Sequential()
+model.add(Dense(10, input_dim=6, activation='sigmoid'))
+model.add(Dense(3, activation='softmax'))
+model.compile(loss='categorical_crossentropy', optimizer='sgd', metrics=['accuracy'])
+model.summary()
 
-    print(Y)
-    #y_int =
+model.fit(x_train, y_train, epochs=200, batch_size=10, shuffle=True)
+
+y_pred = model.predict(x_test)
+y_pred_int = np.argmax(y_pred, axis=1)
+y_test_int = np.argmax(y_test, axis=1)
+cm = confusion_matrix(y_test_int, y_pred_int)
+print(cm)
